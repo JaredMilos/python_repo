@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <link rel="shortcut icon" href="">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+    <style>
+        #container {
+            margin: 15px;
+        }
+        .green_text {
+            color: green
+        }
+        button {
+            background-color: white;
+            box-shadow: 3px 3px;
+            border: 1px solid black;
+            display:inline-block;
+        }
+        .white_text {
+            color: white;
+        }
+        a, h2, form {
+            display: inline-block;
+        }
+        #banner {
+            width: 1000px;
+        }
+        #push_to_right {
+            margin-right: 366px;
+        }
+        #table {
+            display: table;
+            vertical-align: top;
+            width: 700px;
+            border: 2px solid black;
+        }
+        .tr {
+            display: table-row;
+            width: 1000px;
+        }
+        .td-sm {
+            display: table-cell;
+            width: 19px;
+            border: 1px solid black;
+        }
+        .td-md {
+            display: table-cell;
+            width: 150px;
+            border: 1px solid black;
+        }
+        .td-lg {
+            display: table-cell;
+            width: 210px;
+            border: 1px solid black;
+        }
+        .td-action {
+            display: table-cell;
+            width: 210px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .grey {
+            background-color: lightgray;
+        }
+        .ltgrey {
+            background-color: #f1efef;
+        }
+        .white {
+            background-color: white;
+        }
+        #wishlist {
+            width: 1000px;
+        }
+        #grantedwishes {
+            width: 1000px;
+        }
+        h4 {
+            margin: 10px 0px 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='container'>
+        <div id="banner">
+                <h2 id="push_to_right">Hello, {{ request.session.first_name }}! These are your stats!</h2>
+                <a href="/logout/"><u>Logout</u></a>
+                <form action="/wishes/" method="POST">{% csrf_token %}<button type="submit">Dashboard!</button></form>
+        </div>
+        <h4>Total wishes granted for all users: {{ request.session.granted_sum }}</h4>
+        <h6>Your granted wishes: {{ request.session.granted_wishes }}</h6>
+        <h6>Your pending wishes: {{ request.session.pending_wishes }}</h6>
+    </div>
+</body>
+</html>

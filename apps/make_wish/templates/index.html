@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <link rel="shortcut icon" href="">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
+        crossorigin='anonymous'>
+    <style>
+        #container {
+            margin: 15px;
+        }
+
+        #leftbox {
+            border: 1px solid black;
+            display: inline-block;
+            min-width: 371px;
+            vertical-align: top;
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        #rightbox {
+            border: 1px solid black;
+            display: inline-block;
+            min-width: 371px;
+            vertical-align: top;
+            padding: 8px;
+        }
+
+        #table {
+            display: table;
+            vertical-align: top;
+        }
+
+        .tr {
+            display: table-row;
+            margin: 3px 0px;
+        }
+
+        .td {
+            display: table-cell;
+            width: 173px;
+        }
+
+        .tderror {
+            display: table-cell;
+            width: 356px;
+        }
+
+        .shift_right {
+            margin: 0px 0px 0px 93px;
+        }
+
+        .shift_right_lil_mo {
+            margin: 0px 0px 0px 114px;
+        }
+
+        button {
+            background-color: #607EA6;
+            box-shadow: 3px 3px;
+            border: 1px solid black;
+        }
+
+        .white_text {
+            color: white;
+        }
+
+        .red_text {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='container'>
+        <h2>Welcome! Sign in to make a wish!</h2>
+        <div id="leftbox">
+            <h2>Register!</h2>
+            <div id='table'>
+                <form action="/register/" method="POST">
+                    {% csrf_token %}
+                    <span class="tr">
+                        <span class="td">
+                            <p>First Name:</p>
+                        </span>
+                        <span class="td">
+                            <input name="first_name">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'first_name' %}
+                        <span class="tderror">
+                            <ul class="messages">
+
+                                <li class="red_text">{{ message }}</li>
+
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td">
+                            <p>Last Name:</p>
+                        </span>
+                        <span class="td">
+                            <input name="last_name">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'last_name' %}
+                        <span class="tderror">
+                            <ul class="messages">
+                                <li class="red_text">{{ message }}</li>
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td">
+                            <p>Email:</p>
+                        </span>
+                        <span class="td">
+                            <input name="email">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'email' %}
+                        <span class="tderror">
+                            <ul class="messages">
+                                <li class="red_text">{{ message }}</li>
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td">
+                            <p>Password:</p>
+                        </span>
+                        <span class="td">
+                            <input type="password" name="password">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'password' %}
+                        <span class="tderror">
+                            <ul class="messages">
+
+                                <li class="red_text">{{ message }}</li>
+
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td">
+                            <p>Confirm Password:</p>
+                        </span>
+                        <span class="td">
+                            <input type="password" name="confirm_password">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'password_confirm' %}
+                        <span class="tderror">
+                            <ul class="messages">
+
+                                <li class="red_text">{{ message }}</li>
+
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td"></span>
+                        <span class="td">
+                            <button type="submit" class="shift_right">
+                                <span class="white_text">Register</span>
+                            </button>
+                        </span>
+                    </span>
+                </form>
+            </div>
+        </div>
+        <div id="rightbox">
+            <h2>Login</h2>
+            <div id='table'>
+                <form action="/login/" method="POST">
+                    {% csrf_token %}
+                    <span class="tr">
+                        <span class="td">
+                            <p>Email:</p>
+                        </span>
+                        <span class="td">
+                            <input name="email">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'log_email' %}
+                        <span class="tderror">
+                            <ul class="messages">
+
+                                <li class="red_text">{{ message }}</li>
+
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td">
+                            <p>Password:</p>
+                        </span>
+                        <span class="td">
+                            <input type="password" name="password">
+                        </span>
+                        {% if messages %} {% for message in messages %} {% if message.extra_tags == 'log_password' %}
+                        <span class="tderror">
+                            <ul class="messages">
+
+                                <li class="red_text">{{ message }}</li>
+
+                            </ul>
+                        </span>
+                        {% endif %} {% endfor %} {% endif %}
+                    </span>
+                    <span class="tr">
+                        <span class="td"></span>
+                        <span class="td">
+                            <button type="submit" class="shift_right_lil_mo">
+                                <span class="white_text">Login</span>
+                            </button>
+                        </span>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

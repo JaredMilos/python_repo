@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <link rel="shortcut icon" href="">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+    <style>
+        #container {
+            margin: 15px;
+        }
+        .green_text {
+            color: green
+        }
+        button {
+            background-color: white;
+            box-shadow: 3px 3px;
+            border: 1px solid black;
+            display:inline-block;
+        }
+        .white_text {
+            color: white;
+        }
+        a, h2, form {
+            display: inline-block;
+        }
+        #banner {
+            width: 1000px;
+        }
+        #push_to_right {
+            margin-right: 580px;
+        }
+        #table {
+            display: table;
+            vertical-align: top;
+        }
+
+        .tr {
+            display: table-row;
+            margin: 3px 0px;
+        }
+
+        .td {
+            display: table-cell;
+            width: 173px;
+        }
+
+        .tderror {
+            display: table-cell;
+            width: 356px;
+        }
+
+        .shift_right {
+            margin: 0px 0px 0px 93px;
+        }
+
+        .shift_right_lil_mo {
+            margin: 0px 0px 0px 114px;
+        }
+
+        button {
+            background-color: #607EA6;
+            box-shadow: 3px 3px;
+            border: 1px solid black;
+        }
+
+        .white_text {
+            color: white;
+        }
+
+        .red_text {
+            color: red;
+        }
+        #wishbox {
+            padding: 10px 60px;
+            border: 1px solid black;
+            height: 150px;
+            min-width: 496px;
+            max-width: 1000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='container'>
+        <div id="banner">
+                <h2 id="push_to_right">Hello, {{ request.session.first_name }}! Make a wish!</h2>
+                <a href="/logout/"><u>Logout</u></a>
+        </div>
+        <div id="wishbox">
+                <div id='table'>
+                        <form action="/wish/" method="POST">
+                            {% csrf_token %}
+                            <span class="tr">
+                                <span class="td">
+                                    <p>I wish for:</p>
+                                </span>
+                                <span class="td">
+                                    <input name="wish">
+                                </span>
+                                {% if messages %} {% for message in messages %} {% if message.extra_tags == 'wish' %}
+                                <span class="tderror">
+                                    <ul class="messages">
+        
+                                        <li class="red_text">{{ message }}</li>
+        
+                                    </ul>
+                                </span>
+                                {% endif %} {% endfor %} {% endif %}
+                            </span>
+                            <span class="tr">
+                                <span class="td">
+                                    <p>Description:</p>
+                                </span>
+                                <span class="td">
+                                    <input name="desc">
+                                </span>
+                                {% if messages %} {% for message in messages %} {% if message.extra_tags == 'desc' %}
+                                <span class="tderror">
+                                    <ul class="messages">
+        
+                                        <li class="red_text">{{ message }}</li>
+        
+                                    </ul>
+                                </span>
+                                {% endif %} {% endfor %} {% endif %}
+                            </span>
+                            <span class="tr">
+                                <span class="td">
+                                    <button type="submit" formaction="/wishes/" class="shift_right_lil_mo">
+                                            <span class="white_text">Cancel</span>
+                                        </button>
+                                </span>
+                                <span class="td">
+                                    <button type="submit" formaction="/wish/" class="shift_right_lil_mo">
+                                        <span class="white_text">Submit</span>
+                                    </button>
+                                </span>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+        
+        </div>
+    </div>
+</body>
+</html>

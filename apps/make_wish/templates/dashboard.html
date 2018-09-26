@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <link rel="shortcut icon" href="">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
+        crossorigin='anonymous'>
+    <style>
+        #container {
+            margin: 15px;
+        }
+
+        .green_text {
+            color: green
+        }
+
+        button {
+            background-color: white;
+            box-shadow: 3px 3px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+
+        .white_text {
+            color: white;
+        }
+
+        a,
+        h2,
+        form {
+            display: inline-block;
+        }
+
+        #banner {
+            width: 1000px;
+        }
+
+        #push_to_right {
+            margin-right: 540px;
+        }
+
+        #table {
+            display: table;
+            vertical-align: top;
+            width: 700px;
+            border: 2px solid black;
+        }
+
+        .tr {
+            display: table-row;
+            width: 1000px;
+        }
+
+        .td-sm {
+            display: table-cell;
+            width: 19px;
+            border: 1px solid black;
+        }
+
+        .td-md {
+            display: table-cell;
+            width: 150px;
+            border: 1px solid black;
+        }
+
+        .td-lg {
+            display: table-cell;
+            width: 210px;
+            border: 1px solid black;
+        }
+
+        .td-action {
+            display: table-cell;
+            width: 210px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        .grey {
+            background-color: lightgray;
+        }
+
+        .ltgrey {
+            background-color: #f1efef;
+        }
+
+        .white {
+            background-color: white;
+        }
+
+        #wishlist {
+            width: 1000px;
+        }
+
+        #grantedwishes {
+            width: 1000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='container'>
+        <div id="banner">
+            <h2 id="push_to_right">Hello, {{ request.session.first_name }}!</h2>
+            <a href="/logout/">
+                <u>Logout</u>
+            </a>
+            <form action="/stats/" method="POST">{% csrf_token %}
+                <button type="submit">View stats!</button>
+            </form>
+            <form action="/make_wish/" method="POST">{% csrf_token %}
+                <button type="submit">Make a wish!</button>
+            </form>
+        </div>
+        <div id="wishlist">
+            <h4>Your wish list:</h4>
+            <div class="table" id="table">
+                <div class="tr grey">
+                    <span class="td-md">Item</span>
+                    <span class="td-lg">Date Added</span>
+                    <span class="td-action">Actions</span>
+                </div>
+                {% for wish in user_wishes %}
+                <div class="tr {% cycle 'white' 'ltgrey' %}">
+                    <span class="td-md">{{ wish.item }}</span>
+                    <span class="td-lg">{{ wish.created_at }}</span>
+                    <span class="td-action">
+                        <a href="/{{ wish.id }}/destroy">Remove</a> -
+                        <a href="/{{ wish.id }}/edit_wish">Edit</a> -
+                        <a href="/{{ wish.id }}/granted">Granted!</a>
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="grantedwishes">
+            <h4>Granted wishes:</h4>
+            <div class="table" id="table">
+                <div class="tr grey">
+                    <span class="td-md">Item</span>
+                    <span class="td-md">Wisher</span>
+                    <span class="td-lg">Date Added</span>
+                    <span class="td-lg">Date Granted</span>
+                    <span class="td-md">Likes</span>
+                    <span class="td-action">Actions</span>
+                </div>
+                {% for wish in overall_granteds %}
+                <div class="tr {% cycle 'white' 'ltgrey' %}">
+                    <span class="td-md">{{ wish.item }}</span>
+                    <span class="td-md">{{ wish.wisher.first_name }}</span>
+                    <span class="td-lg">{{ wish.created_at }}</span>
+                    <span class="td-lg">{{ wish.granted_at }}</span>
+                    <span class="td-lg">{{ wish.likes_sum }}</span>
+                    <span class="td-action">
+
+                        {% if wish.wisher.id != request.session.user_id %} {% if wish.already_liked == False %}
+                        <a href="/{{ wish.id }}/like/">Like</a>
+                        {% endif %} {% endif %}
+
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
